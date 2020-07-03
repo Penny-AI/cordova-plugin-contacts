@@ -864,16 +864,16 @@ static NSDictionary* org_apache_cordova_contacts_defaultFields = nil;
         // if no returnFields specified, W3C says to return empty contact (but Cordova will at least return id)
         return nc;
     }
-    if ([self.returnFields objectForKey:kW3ContactDisplayName]) {
-        // displayname requested -  iOS doesn't have so return null
-        [nc setObject:[NSNull null] forKey:kW3ContactDisplayName];
-        // may overwrite below if requested ContactName and there are no values
-    }
-    // nickname
-    if ([self.returnFields valueForKey:kW3ContactNickname]) {
-        value = (__bridge_transfer NSString*)ABRecordCopyValue(self.record, kABPersonNicknameProperty);
-        [nc setObject:(value != nil) ? value:[NSNull null] forKey:kW3ContactNickname];
-    }
+    // if ([self.returnFields objectForKey:kW3ContactDisplayName]) {
+    //     // displayname requested -  iOS doesn't have so return null
+    //     [nc setObject:[NSNull null] forKey:kW3ContactDisplayName];
+    //     // may overwrite below if requested ContactName and there are no values
+    // }
+    // // nickname
+    // if ([self.returnFields valueForKey:kW3ContactNickname]) {
+    //     value = (__bridge_transfer NSString*)ABRecordCopyValue(self.record, kABPersonNicknameProperty);
+    //     [nc setObject:(value != nil) ? value:[NSNull null] forKey:kW3ContactNickname];
+    // }
 
     // name dictionary
     // NSLog(@"getting name info");
@@ -881,18 +881,18 @@ static NSDictionary* org_apache_cordova_contacts_defaultFields = nil;
     if (data != nil) {
         [nc setObject:data forKey:kW3ContactName];
     }
-    if ([self.returnFields objectForKey:kW3ContactDisplayName] && ((data == nil) || ([(NSDictionary*)data objectForKey : kW3ContactFormattedName] == [NSNull null]))) {
-        // user asked for displayName which iOS doesn't support but there is no other name data being returned
-        // try and use Composite Name so some name is returned
-        id tryName = (__bridge_transfer NSString*)ABRecordCopyCompositeName(self.record);
-        if (tryName != nil) {
-            [nc setObject:tryName forKey:kW3ContactDisplayName];
-        } else {
-            // use nickname or empty string
-            value = (__bridge_transfer NSString*)ABRecordCopyValue(self.record, kABPersonNicknameProperty);
-            [nc setObject:(value != nil) ? value:@"" forKey:kW3ContactDisplayName];
-        }
-    }
+    // if ([self.returnFields objectForKey:kW3ContactDisplayName] && ((data == nil) || ([(NSDictionary*)data objectForKey : kW3ContactFormattedName] == [NSNull null]))) {
+    //     // user asked for displayName which iOS doesn't support but there is no other name data being returned
+    //     // try and use Composite Name so some name is returned
+    //     id tryName = (__bridge_transfer NSString*)ABRecordCopyCompositeName(self.record);
+    //     if (tryName != nil) {
+    //         [nc setObject:tryName forKey:kW3ContactDisplayName];
+    //     } else {
+    //         // use nickname or empty string
+    //         value = (__bridge_transfer NSString*)ABRecordCopyValue(self.record, kABPersonNicknameProperty);
+    //         [nc setObject:(value != nil) ? value:@"" forKey:kW3ContactDisplayName];
+    //     }
+    // }
     // phoneNumbers array
     // NSLog(@"getting phoneNumbers");
     value = [self extractMultiValue:kW3ContactPhoneNumbers];
@@ -905,29 +905,29 @@ static NSDictionary* org_apache_cordova_contacts_defaultFields = nil;
     if (value != nil) {
         [nc setObject:value forKey:kW3ContactEmails];
     }
-    // urls array
-    value = [self extractMultiValue:kW3ContactUrls];
-    if (value != nil) {
-        [nc setObject:value forKey:kW3ContactUrls];
-    }
+    // // urls array
+    // value = [self extractMultiValue:kW3ContactUrls];
+    // if (value != nil) {
+    //     [nc setObject:value forKey:kW3ContactUrls];
+    // }
     // addresses array
     // NSLog(@"getting addresses");
-    value = [self extractAddresses];
-    if (value != nil) {
-        [nc setObject:value forKey:kW3ContactAddresses];
-    }
+    // value = [self extractAddresses];
+    // if (value != nil) {
+    //     [nc setObject:value forKey:kW3ContactAddresses];
+    // }
     // im array
     // NSLog(@"getting ims");
-    value = [self extractIms];
-    if (value != nil) {
-        [nc setObject:value forKey:kW3ContactIms];
-    }
+    // value = [self extractIms];
+    // if (value != nil) {
+    //     [nc setObject:value forKey:kW3ContactIms];
+    // }
     // organization array (only info for one organization in iOS)
     // NSLog(@"getting organizations");
-    value = [self extractOrganizations];
-    if (value != nil) {
-        [nc setObject:value forKey:kW3ContactOrganizations];
-    }
+    // value = [self extractOrganizations];
+    // if (value != nil) {
+    //     [nc setObject:value forKey:kW3ContactOrganizations];
+    // }
 
     // for simple properties, could make this a bit more efficient by storing all simple properties in a single
     // array in the returnFields dictionary and setting them via a for loop through the array
@@ -982,11 +982,11 @@ static NSDictionary* org_apache_cordova_contacts_defaultFields = nil;
         }
     }*/
 
-    if ([self.returnFields valueForKey:kW3ContactNote]) {
-        // note
-        value = (__bridge_transfer NSString*)ABRecordCopyValue(self.record, kABPersonNoteProperty);
-        [nc setObject:(value != nil) ? value:[NSNull null] forKey:kW3ContactNote];
-    }
+    // if ([self.returnFields valueForKey:kW3ContactNote]) {
+    //     // note
+    //     value = (__bridge_transfer NSString*)ABRecordCopyValue(self.record, kABPersonNoteProperty);
+    //     [nc setObject:(value != nil) ? value:[NSNull null] forKey:kW3ContactNote];
+    // }
 
     if ([self.returnFields valueForKey:kW3ContactPhotos]) {
         value = [self extractPhotos];
